@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-12-19T11:33:56" hostname="zhangchaos-MacBook-Air.local" time="0.059">
-  <properties/>
-  <testcase name="testParser" classname="ParserTest" time="0.059"/>
-  <system-out><![CDATA[[{"name":"a","label":"开始","comment":"起始","next":"b","style":"START"},{"name":"b","label":"定义","next":"c","style":"TASK"},{"name":"c","label":"结束","style":"END"}]
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

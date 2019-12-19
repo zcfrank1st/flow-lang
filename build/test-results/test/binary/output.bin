@@ -1,1 +1,0 @@
-�[{"name":"a","label":"开始","comment":"起始","next":"b","style":"START"},{"name":"b","label":"定义","next":"c","style":"TASK"},{"name":"c","label":"结束","style":"END"}]
