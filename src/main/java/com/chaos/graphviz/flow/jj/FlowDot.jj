@@ -1,0 +1,165 @@
+options {
+  JDK_VERSION = "1.8";
+  UNICODE_INPUT = true;
+}
+
+PARSER_BEGIN(FlowDot)
+
+package com.chaos.graphviz.flow.jj;
+/** Simple brace matcher. */
+import com.chaos.graphviz.flow.bean.Node;
+import java.util.LinkedList;
+import java.util.List;
+
+public class FlowDot {
+    public static List<Node> nodes = new LinkedList<Node>();
+}
+PARSER_END(FlowDot)
+
+SKIP : {
+    " "
+    | "\t"
+    | "\r"
+    | "\n"
+    | "\r\n"
+}
+
+TOKEN[IGNORE_CASE] : {
+    <START_STEP: "start">
+    | <END_STEP: "end">
+    | <IF_STEP: "ifstep">
+    | <STEP: "step">
+    | <TO: "to">
+    | <CALLED: "called">
+    | <AND: "and">
+    | <COMMENT: "comment">
+    | <FLOW_NAME:(<ALPHA>|<NUMBER>)+>
+    | <LABEL: (<ALPHA>|<NUMBER>|<CHINESE>)+>
+    | <LINE_END: ";">
+    | <#ALPHA:["a"-"z"]>
+    | <#NUMBER: ["0"-"9"]>
+    | <#CHINESE: ["\u4e00"-"\u9fa5"]>
+}
+
+/** Root production. */
+void build() :
+{}
+{
+    startStep()
+    ( ifStep() | step() )*
+    endStep() <EOF>
+}
+
+void startStep():
+{
+    Token start;
+    Token startNext;
+    Token comment;
+}
+{
+    <START_STEP>
+    start = <FLOW_NAME> {
+        Node node = new Node();
+        node.setName(start.image);
+        node.setLabel("\u5f00\u59cb");
+        node.setStyle("START");
+    }
+    <TO>
+    startNext = <FLOW_NAME> {
+        node.setNext(startNext.image);
+    }
+    (<COMMENT>
+    comment=<LABEL>{
+        node.setComment(comment.image);
+    })?
+    <LINE_END> {
+        nodes.add(node);
+    }
+}
+
+void ifStep():
+{
+    Token ifStep;
+    Token ifLabel;
+    Token ifStepNext1;
+    Token ifStepNext2;
+    String next = "";
+} {
+    <IF_STEP>
+    ifStep = <FLOW_NAME>
+    {
+        Node node = new Node();
+        node.setName(ifStep.image);
+        node.setStyle("IFTASK");
+    }
+    <CALLED>
+    ifLabel = <LABEL>
+    {
+        node.setLabel(ifLabel.image);
+    }
+    <TO>
+    ifStepNext1 = <FLOW_NAME>
+    {
+        next += ifStepNext1 + "|";
+    }
+    <AND>
+    ifStepNext2 = <FLOW_NAME>
+    {
+        next += ifStepNext2;
+        node.setNext(next);
+    }
+    <LINE_END>
+    { nodes.add(node); }
+}
+
+void step():
+{
+    Token current;
+    Token label;
+    Token currentNext;
+    Token comment;
+} {
+    <STEP>
+    current = <FLOW_NAME>{
+        Node node = new Node();
+        node.setName(current.image);
+    }
+    <CALLED>
+    label = <LABEL>
+    {
+        node.setLabel(label.image);
+    }
+    <TO>
+    currentNext = <FLOW_NAME>
+    {
+        node.setNext(currentNext.image);
+    }
+    (<COMMENT>
+    comment=<LABEL>
+    {
+        node.setComment(comment.image);
+    }
+    )? <LINE_END>
+    {
+        node.setStyle("TASK");
+        nodes.add(node);
+    }
+}
+
+void endStep(): {
+    Token end;
+} {
+    <END_STEP>
+    end = <FLOW_NAME>
+    {
+        Node node = new Node();
+        node.setName(end.image);
+        node.setLabel("\u7ed3\u675f");
+
+        node.setStyle("END");
+    }
+    <LINE_END>
+    {
+        nodes.add(node);
+    }
+}
