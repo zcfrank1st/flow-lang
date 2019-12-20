@@ -23,24 +23,14 @@ import java.util.Map;
  */
 public class FlowCraft {
     public static void main(String[] args) throws IOException, TemplateException, ParseException {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-        cfg.setDirectoryForTemplateLoading(new File(FlowCraft.class.getResource("flow.ftlh").getPath().replace("flow.ftlh", "")));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-        cfg.setWrapUncheckedExceptions(true);
-        cfg.setFallbackOnNullLoopVariable(false);
-
+        // TODO refactor commandline
         FlowDot flowDot = new FlowDot(new ByteArrayInputStream("".getBytes()));
         flowDot.build();
 
-
-        Map root = new HashMap();
-        root.put("nodes", FlowDot.nodes);
-
-        Template temp = cfg.getTemplate("flow.ftlh");
         StringWriter writer = new StringWriter();
-        temp.process(root, writer);
+
+        FreemarkerPart freemarkerPart = new FreemarkerPart();
+        freemarkerPart.process(FlowDot.nodes, writer);
 
         MutableGraph g = new Parser().read(writer.toString());
         Graphviz.fromGraph(g).render(Format.SVG).toFile(new File(""));
