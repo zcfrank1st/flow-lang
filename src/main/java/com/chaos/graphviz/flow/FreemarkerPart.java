@@ -18,7 +18,7 @@ public class FreemarkerPart {
 
     public FreemarkerPart() throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-        cfg.setDirectoryForTemplateLoading(new File(FlowCraft.class.getResource("/" + TEMPLATE_NAME).getPath().replace(TEMPLATE_NAME, "")));
+        cfg.setClassForTemplateLoading(this.getClass(), "/");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);

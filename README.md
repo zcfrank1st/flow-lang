@@ -4,7 +4,17 @@ flow-lang
 
 #### how to use
 
+DSL
 
+        start a to b comment 起;
+        step b called 定义 to c;
+        end c;
+        
+=>
+        
+![flowchart](./2.svg)
+
+        java -Dinput=../../../resources/main/flow.fl -Doutput=./2.svg -jar flow-lang-1.0-SNAPSHOT-all.jar
 
 #### licence
 
