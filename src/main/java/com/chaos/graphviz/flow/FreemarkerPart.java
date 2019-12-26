@@ -8,23 +8,23 @@ import freemarker.template.TemplateExceptionHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FreemarkerPart {
+    private static final String TEMPLATE_NAME = "flow.ftlh";
     private Template temp;
 
     public FreemarkerPart() throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-        cfg.setDirectoryForTemplateLoading(new File(FlowCraft.class.getResource("flow.ftlh").getPath().replace("flow.ftlh", "")));
+        cfg.setDirectoryForTemplateLoading(new File(FlowCraft.class.getResource("/" + TEMPLATE_NAME).getPath().replace(TEMPLATE_NAME, "")));
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
         cfg.setFallbackOnNullLoopVariable(false);
-        temp = cfg.getTemplate("flow.ftlh");
+        temp = cfg.getTemplate(TEMPLATE_NAME);
     }
 
     public void process(Object value, Writer writer) throws IOException, TemplateException {

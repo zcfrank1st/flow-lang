@@ -1,7 +1,7 @@
 digraph flowdot {
 <#list nodes as node>
     <#if node.style == "START">
-    ${node.name}[shape="rectangle",style="rounded,filled",color="lightgreen",label="${node.label}",fontname="微软雅黑"];
+    ${node.name}[shape="rectangle",style="rounded,filled",color="limegreen",label="${node.label}",fontname="微软雅黑"];
     </#if>
     <#if node.style == "END">
     ${node.name}[shape="rectangle",style="rounded,filled",color="lightcoral",label="${node.label}",fontname="微软雅黑"];
