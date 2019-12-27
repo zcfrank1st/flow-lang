@@ -4,6 +4,14 @@ flow-lang
 
 #### how to use
 
+Grammar
+
+    START ?? TO ?? [COMMENT ??];
+    IFSTEP ?? CALLED ?? TO ?? AND ??;
+    STEP ?? CALLED ?? TO ?? [COMMENT ??];
+    END ??;
+
+
 DSL
 
         start a to b comment 起;
@@ -11,6 +19,8 @@ DSL
         end c;
         
 =>
+
+Picture
         
 ![flowchart](./2.svg)
 
