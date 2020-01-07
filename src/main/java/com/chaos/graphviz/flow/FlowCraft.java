@@ -39,7 +39,7 @@ public class FlowCraft {
         String output = System.getProperty("output");
         Renderer renderer = Graphviz.fromGraph(g).render(Format.SVG);
         if (StringUtils.isEmpty(output)) {
-            renderer.toString();
+            System.out.println(renderer.toString());
         } else {
             renderer.toFile(new File(output));
         }
