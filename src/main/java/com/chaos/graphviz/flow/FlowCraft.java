@@ -20,8 +20,14 @@ import java.nio.file.Paths;
  */
 public class FlowCraft {
     public static void main(String[] args) throws IOException, TemplateException, ParseException {
-        FlowDot flowDot = new FlowDot(new ByteArrayInputStream(Files.readAllBytes(Paths.get(System.getProperty("input")))));
-        flowDot.build();
+        String input = System.getProperty("input");
+        if (StringUtils.isEmpty(input)) {
+            FlowDot flowDot = new FlowDot(new ByteArrayInputStream(System.getProperty("text").getBytes()), "utf-8");
+            flowDot.build();
+        } else {
+            FlowDot flowDot = new FlowDot(new ByteArrayInputStream(Files.readAllBytes(Paths.get(input))));
+            flowDot.build();
+        }
 
         StringWriter writer = new StringWriter();
 
