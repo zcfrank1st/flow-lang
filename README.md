@@ -25,6 +25,8 @@ Picture
 ![flowchart](./2.svg)
 
         java -Dinput=../../../resources/main/flow.fl -Doutput=./2.svg -jar flow-lang-1.0-SNAPSHOT-all.jar
+        
+    Or  java -Dinput=../../../resources/main/flow.fl -jar flow-lang-1.0-SNAPSHOT-all.jar
 
 #### licence
 
