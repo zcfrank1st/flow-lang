@@ -5,8 +5,10 @@ import com.chaos.graphviz.flow.jj.ParseException;
 import freemarker.template.TemplateException;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.engine.Renderer;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.parse.Parser;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,6 +29,13 @@ public class FlowCraft {
         freemarkerPart.process(FlowDot.nodes, writer);
 
         MutableGraph g = new Parser().read(writer.toString());
-        Graphviz.fromGraph(g).render(Format.SVG).toFile(new File(System.getProperty("output")));
+
+        String output = System.getProperty("output");
+        Renderer renderer = Graphviz.fromGraph(g).render(Format.SVG);
+        if (StringUtils.isEmpty(output)) {
+            renderer.toString();
+        } else {
+            renderer.toFile(new File(output));
+        }
     }
 }
