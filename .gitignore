@@ -6,3 +6,7 @@ build/
 .theia
 *.log
 bin/
+
+.classpath
+.project
+.settings
