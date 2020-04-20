@@ -22,9 +22,11 @@ import java.nio.file.Paths;
  */
 public class FlowCraft {
     public static void main(String[] args) throws IOException, TemplateException, ParseException {
-        String input = System.getProperty("input");
-        if (StringUtils.isEmpty(input)) {
-            FlowDot flowDot = new FlowDot(new ByteArrayInputStream(System.getProperty("text").getBytes()), "utf-8");
+        if (StringUtils.isEmpty(System.getProperty("input"))) {
+            if (StringUtils.isEmpty(getInputText())) {
+                System.out.println("Error Input Text Or File !");
+            }
+            FlowDot flowDot = new FlowDot(new ByteArrayInputStream(getInputText().getBytes()), "utf-8");
             flowDot.build();
         } else {
             FlowDot flowDot = new FlowDot(new ByteArrayInputStream(Files.readAllBytes(Paths.get(input))));
@@ -45,5 +47,9 @@ public class FlowCraft {
         } else {
             renderer.toFile(new File(output));
         }
+    }
+
+    private String getInputText() {
+        return System.getProperty("input");
     }
 }
